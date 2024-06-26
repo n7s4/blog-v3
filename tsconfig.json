@@ -11,7 +11,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "~icons/*": ["node_modules/your-icons-folder/*"]
+      "@/*": ["src/*"]
     }
   }
 }

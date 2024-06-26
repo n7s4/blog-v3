@@ -12,8 +12,7 @@
               {{ menu.title }}
             </template>
             <el-menu-item v-for="submenu in menu.children" :key="submenu.path" :index="submenu.path">
-              <component class="menu-icon" :is="menu.icon"></component>
-              {{ submenu.title }}
+              <component class="menu-icon text-black" :is="submenu.icon"></component> <span class="text-black">{{ submenu.title }} </span>
             </el-menu-item>
           </el-sub-menu>
           <el-menu-item v-else :index="menu.path">
@@ -40,31 +39,43 @@ type MenuList = {
 }
 const menuList: MenuList[] = [
   {
+    title: "搜索",
+    icon: defineAsyncComponent(() => import("~icons/material-symbols-light/search")),
+    path: "/",
+    children: []
+  },
+  {
     title: "首页",
-    icon: defineAsyncComponent(() => import("~icons/material-symbols/face-2")),
+    icon: defineAsyncComponent(() => import("~icons/akar-icons/home")),
     path: "/home",
     children: []
   },
   {
+    title: "文章",
+    icon: defineAsyncComponent(() => import("~icons/akar-icons/home")),
+    path: "/article",
+    children: []
+  },
+  {
     title: "时间轴",
-    icon: defineAsyncComponent(() => import("~icons/material-symbols/face-2")),
+    icon: defineAsyncComponent(() => import("~icons/material-symbols/bedtime-outline")),
     path: "/archive",
     children: []
   },
   {
     title: "说说",
-    icon: defineAsyncComponent(() => import("~icons/material-symbols/face-2")),
+    icon: defineAsyncComponent(() => import("~icons/mingcute/moment-line")),
     path: "/talk",
     children: []
   },
   {
     title: "更多",
-    icon: defineAsyncComponent(() => import("~icons/material-symbols/face-2")),
+    icon: defineAsyncComponent(() => import("~icons/ri/more-line")),
     path: "/more",
     children: [
       {
         title: "关于我",
-        icon: defineAsyncComponent(() => import("~icons/material-symbols/face-2")),
+        icon: defineAsyncComponent(() => import("~icons/cib/about-me")),
         path: "/more/about",
       }
     ]
@@ -72,6 +83,7 @@ const menuList: MenuList[] = [
 ]
 const handleSelect = (path: string) => {
   console.log(path)
+  if(!path) return;
   router.push(path);
 }
 </script>
@@ -82,16 +94,14 @@ const handleSelect = (path: string) => {
   // justify-content: space-between;
   align-items: center;
   .left {
-    display: flex;width: 20%;
+    width: 20%;
     .logo {
       width: 3rem;
       height: 3rem;
       transition: all .3s;
-      border-radius: 50%;
     }
     .logo:hover {
       transform: rotate(180deg);
-
     }
   }
   .right {
@@ -104,8 +114,8 @@ const handleSelect = (path: string) => {
 
 }
 .menu-icon {
-      margin-right: 1rem;
-      height: 1rem;
-      width: 1rem;
-    }
+  margin-right: 1rem;
+  height: 1rem;
+  width: 1rem;
+}
 </style>

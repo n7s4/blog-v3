@@ -1,17 +1,17 @@
-import { defineConfig } from 'vite'
-import { resolve } from 'path'
-import vue from '@vitejs/plugin-vue'
+import { defineConfig } from 'vite';
+import path, { resolve } from 'path';
+import vue from '@vitejs/plugin-vue';
 // tailwindcss插件
-import tailwindcss from 'tailwindcss'
-import autoprefixer from 'autoprefixer'
+import tailwindcss from 'tailwindcss';
+import autoprefixer from 'autoprefixer';
 
 // 自动导入组件
-import AutoImport from 'unplugin-auto-import/vite'
+import AutoImport from 'unplugin-auto-import/vite';
 // 自动导入 src/components 组件
-import Components from 'unplugin-vue-components/vite'
-import { ElementPlusResolver } from "unplugin-vue-components/resolvers"
-import {createSvgIconsPlugin } from 'vite-plugin-svg-icons'
-import Icons from 'unplugin-icons/vite'
+import Components from 'unplugin-vue-components/vite';
+import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
+import {createSvgIconsPlugin } from 'vite-plugin-svg-icons';
+import Icons from 'unplugin-icons/vite';
 // https://vitejs.dev/config/
 export default defineConfig({
   // 配置代理
@@ -32,8 +32,8 @@ export default defineConfig({
   // 配置别名
   resolve: {
     alias: {
-      "@": resolve(__dirname + '/src'),
-    }
+      "@": path.resolve(__dirname, './src')
+    },
   },
   plugins: [
     vue(),
