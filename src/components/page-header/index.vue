@@ -2,7 +2,7 @@ import { useRoute } from 'vue-router';
 <template>
   <div class="page-header">
     <div id="home" class="home" v-if="route.path === '/home'">
-      <el-image :src="banner" class="banner" fix="cover"/>
+      <el-image :src="banner" class="banner" fix="cover" />
       <div class="content">
         <div class="title">
           Blog
@@ -12,17 +12,49 @@ import { useRoute } from 'vue-router';
         </div>
       </div>
       <div class="mask"></div>
-      <div v-if="showScrollBottom" @click="scrollToBottom" class="scroll-bottom"><MingcuteDownFill class="scroll-icon w-[2rem] h-[2rem]"/></div>
+      <div v-if="showScrollBottom" @click="scrollToBottom" class="scroll-bottom">
+        <MingcuteDownFill class="scroll-icon w-[2rem] h-[2rem]" />
+      </div>
     </div>
     <div class="article" v-else-if="route.path === '/article'">
-      <el-image :src="banner" class="banner" fix="cover"/>
+      <el-image :src="banner" class="banner" fix="cover" />
       <div class="content text-white">
-        发表于2024-03-01 21:05:33更新于2024-06-22 14:50:59操作系统浏览器点赞数2浏览次数21阅读时长36 分
+        <div class="title">{{ getArticle.title }}</div>
+        <div class="info text-sm mb-3 flex flex-wrap items-center p-[1.2rem]">
+          <div class="item mr-[0.3rem] flex items-center">
+            <Fa6RegularCalendarDays class="w-[1rem] h-[1rem] mr-[0.2rem]" />
+            <span>发表于{{ getArticle.title }}</span>
+          </div>
+          <div class="item mr-[0.3rem] flex items-center">
+            <Fa6RegularClock class="w-[1rem] h-[1rem] mr-[0.2rem]" />
+            <span>更新于{{ getArticle.updatedTime }}</span>
+          </div>
+          <div class="item mr-[0.3rem] flex items-center">
+            <FaRegularListAlt class="w-[1rem] h-[1rem] mr-[0.2rem]" />
+            <span>{{ getArticle.category }}</span>
+            ｜
+          </div>
+          <div class="item mr-[0.3rem] flex items-center">
+            <FaRegularBookmark class="w-[1rem] h-[1rem] mr-[0.2rem]" />
+            <span>{{ getArticle.tage.join("、") }}</span>
+            ｜
+          </div>
+          <div class="item mr-[0.3rem] flex items-center">
+            <Fa6RegularThumbsUp class="w-[1rem] h-[1rem] mr-[0.2rem]" />
+            <span>{{ getArticle.likes }}</span>
+            ｜
+          </div>
+          <div class="item mr-[0.3rem] flex items-center">
+            <Fa6RegularEye class="w-[1rem] h-[1rem] mr-[0.2rem]" />
+            <span>{{ getArticle.views }}</span>
+          </div>
+        </div>
       </div>
+
       <div class="ma"></div>
     </div>
     <div class="other" v-else>
-      <el-image :src="banner" class="banner" fix="cover"/>
+      <el-image :src="banner" class="banner" fix="cover" />
       <div class="content">
         <div class="title">
           {{ route.name }}
@@ -34,17 +66,28 @@ import { useRoute } from 'vue-router';
 </template>
 
 <script setup lang="ts">
+import FaRegularListAlt from "~icons/fa-regular/list-alt";
+import FaRegularBookmark from "~icons/fa-regular/bookmark";
+import Fa6RegularThumbsUp from "~icons/fa6-regular/thumbs-up";
+import Fa6RegularEye from "~icons/fa6-regular/eye";
+import Fa6RegularCalendarDays from "~icons/fa6-regular/calendar-days";
+import Fa6RegularClock from "~icons/fa6-regular/clock";
 import { useRoute } from 'vue-router';
 import banner from '@/assets/images/banner.png';
 import MingcuteDownFill from '~icons/mingcute/down-fill';
+import useArticleStore from '../../store/article'
 import { onMounted, ref } from 'vue';
 import { debounce } from 'lodash';
+import { storeToRefs } from 'pinia';
 const route = useRoute();
 const showScrollBottom = ref(true);
 
+const articleStore = useArticleStore();
+const { getArticle, } = storeToRefs(articleStore);
+
 const scrollToBottom = () => {
   const homeElement = document.querySelector("#home");
-  if(homeElement) {
+  if (homeElement) {
     document.body.scrollTo({
       top: homeElement.clientHeight,
       behavior: "smooth",
@@ -146,12 +189,14 @@ onMounted(() => {
 }
 
 @keyframes bounce {
+
   0%,
   100% {
     transform: translateY(-25%);
     animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
     opacity: 1;
   }
+
   50% {
     transform: translateY(0);
     animation-timing-function: cubic-bezier(0, 0, 0.2, 1);

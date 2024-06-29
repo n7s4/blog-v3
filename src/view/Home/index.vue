@@ -155,19 +155,7 @@ import Fa6RegularChartBar from "~icons/fa6-regular/chart-bar";
 import IconParkTag from '~icons/icon-park/tag';
 import { onMounted, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
-
-type ArticleList = {
-  id: number;
-  title: string;
-  desc: string;
-  cover: string;
-  createdTime: string;
-  updatedTime: string;
-  views: string;
-  likes: string;
-  tage: string[];
-  category: string;
-}
+import ArticleList from '../../store/article/types';
 
 const router = useRouter();
 const articleList = ref<ArticleList[]>([]);
