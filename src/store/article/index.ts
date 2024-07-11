@@ -13,7 +13,8 @@ const article = defineStore('article', {
           views: "",
           likes: "",
           tage: [],
-          category: ""
+          category: "",
+          readDuration: ''
       }
     }
   },

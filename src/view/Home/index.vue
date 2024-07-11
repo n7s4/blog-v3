@@ -170,7 +170,8 @@ const staticArticleList: ArticleList[] = [
     views: "1w",
     likes: "100",
     tage: ["教程", "部署"],
-    category: "博客部署"
+    category: "博客部署",
+    readDuration: undefined
   },
   {
     id: 2,
@@ -182,7 +183,8 @@ const staticArticleList: ArticleList[] = [
     views: "1w",
     likes: "100",
     tage: ["教程", "部署"],
-    category: "博客部署"
+    category: "博客部署",
+    readDuration: undefined
   },
   {
     id: 3,
@@ -194,7 +196,8 @@ const staticArticleList: ArticleList[] = [
     views: "1w",
     likes: "100",
     tage: ["教程", "部署"],
-    category: "博客部署"
+    category: "博客部署",
+    readDuration: undefined
   },
   {
     id: 4,
@@ -206,7 +209,8 @@ const staticArticleList: ArticleList[] = [
     views: "1w",
     likes: "100",
     tage: ["教程", "部署"],
-    category: "博客部署"
+    category: "博客部署",
+    readDuration: undefined
   },
   {
     id: 5,
@@ -218,7 +222,8 @@ const staticArticleList: ArticleList[] = [
     views: "1w",
     likes: "100",
     tage: ["教程", "部署"],
-    category: "博客部署"
+    category: "博客部署",
+    readDuration: undefined
   },
   {
     id: 6,
@@ -230,7 +235,8 @@ const staticArticleList: ArticleList[] = [
     views: "1w",
     likes: "100",
     tage: ["教程", "部署"],
-    category: "博客部署"
+    category: "博客部署",
+    readDuration: undefined
   },
 ];
 const params = reactive({

@@ -1,4 +1,5 @@
 type ArticleList = {
+  readDuration: any;
   id: number;
   title: string;
   desc: string;

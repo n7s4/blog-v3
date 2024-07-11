@@ -20,10 +20,10 @@ import { useRoute } from 'vue-router';
       <el-image :src="banner" class="banner" fix="cover" />
       <div class="content text-white">
         <div class="title">{{ getArticle.title }}</div>
-        <div class="info text-sm mb-3 flex flex-wrap items-center p-[1.2rem]">
+        <div class="info text-sm mb-3 flex flex-wrap justify-center items-center p-[1.2rem] max-w-[60vw]">
           <div class="item mr-[0.3rem] flex items-center">
             <Fa6RegularCalendarDays class="w-[1rem] h-[1rem] mr-[0.2rem]" />
-            <span>发表于{{ getArticle.title }}</span>
+            <span>发表于{{ getArticle.createdTime }}</span>
           </div>
           <div class="item mr-[0.3rem] flex items-center">
             <Fa6RegularClock class="w-[1rem] h-[1rem] mr-[0.2rem]" />
@@ -41,12 +41,16 @@ import { useRoute } from 'vue-router';
           </div>
           <div class="item mr-[0.3rem] flex items-center">
             <Fa6RegularThumbsUp class="w-[1rem] h-[1rem] mr-[0.2rem]" />
-            <span>{{ getArticle.likes }}</span>
+            <span>点赞数 {{ getArticle.likes }}</span>
             ｜
           </div>
           <div class="item mr-[0.3rem] flex items-center">
             <Fa6RegularEye class="w-[1rem] h-[1rem] mr-[0.2rem]" />
-            <span>{{ getArticle.views }}</span>
+            <span>浏览数 {{ getArticle.views }}</span>
+          </div>
+          <div class="item mr-[0.3rem] flex items-center">
+            <Fa6RegularEye class="w-[1rem] h-[1rem] mr-[0.2rem]" />
+            <span>阅读时长 {{ getArticle.readDuration }}</span>
           </div>
         </div>
       </div>
