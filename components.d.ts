@@ -7,20 +7,19 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    ElAddix: typeof import('element-plus/es')['ElAddix']
     ElAffix: typeof import('element-plus/es')['ElAffix']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
-    ElAvator: typeof import('element-plus/es')['ElAvator']
-    ElButton: typeof import('element-plus/es')['ElButton']
     ElCard: typeof import('element-plus/es')['ElCard']
-    ElCarf: typeof import('element-plus/es')['ElCarf']
     ElCol: typeof import('element-plus/es')['ElCol']
     ElImage: typeof import('element-plus/es')['ElImage']
-    ElMennu: typeof import('element-plus/es')['ElMennu']
     ElMenu: typeof import('element-plus/es')['ElMenu']
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
     ElPagination: typeof import('element-plus/es')['ElPagination']
     ElRow: typeof import('element-plus/es')['ElRow']
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
+    ElTimeline: typeof import('element-plus/es')['ElTimeline']
+    ElTimelineItem: typeof import('element-plus/es')['ElTimelineItem']
     Footer: typeof import('./src/components/layout/footer/index.vue')['default']
     Header: typeof import('./src/components/layout/header/index.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
