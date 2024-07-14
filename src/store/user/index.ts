@@ -1,42 +1,32 @@
 import { defineStore } from 'pinia'
-import { computed, ref } from 'vue'
-export const useUserStore = defineStore('user', () => {
-  // state
-  let fistName = ref<string>('like')
-  let lastName = ref<string>('ns')
-  
-  // getters
-  const fullName = computed(() => {
-    return `${fistName.value}-${lastName.value}`
-  })
-
-  //action
-  const changeFirstName = (newName: string) => {
-    fistName.value = newName
-  }
-  return {fistName, lastName, fullName, changeFirstName}
-})
-export const useCounterStore = defineStore('counter', {
+import { useDark, useToggle } from '@vueuse/core'
+const isDark = useDark()
+const toggleDark = useToggle(isDark)
+const userStore = defineStore('user', {
   persist: {
     enabled: true,
     strategies: [
       {
-        key: 'count',
+        key: 'isDark',
         storage: localStorage,
       }
-    ],
+    ]
   },
   state: () => {
     return {
-      count: 0,
+      isDark: isDark.value
     }
   },
   getters: {
-
+    getIsDark: function(): boolean {
+      return this.isDark
+    }
   },
   actions: {
-    addCount() {
-      this.count++
+    setToggleDark() {
+      toggleDark()
+      this.isDark = isDark.value
     }
-  }
+  },
 })
+export default userStore

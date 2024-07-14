@@ -17,7 +17,7 @@
     </div>
 
   </el-card>
-  <div class="flex justify-center items-center">
+  <div class="flex justify-center items-center mt-[0.3rem]">
     <el-pagination v-model:current-page="params.currentPage" v-model:page-size="params.pageSize"
       layout="prev, pager, next" :total="activities.length" @change="getArchive" />
   </div>

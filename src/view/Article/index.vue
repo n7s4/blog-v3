@@ -1,6 +1,6 @@
 <template>
   <el-row :gutter="20">
-    <el-col :span="18">
+    <el-col :sm="18" :xs="24">
       <el-card>
         <MdPreview :editorId="id" :modelValue="text" />
         <div class="copyright-info p-[20px] border  border-slate-300">
@@ -33,7 +33,7 @@
           </div>
       </el-card>
     </el-col>
-    <el-col :span="6">
+    <el-col :sm="6" :xs="0">
       <el-affix :offset="60">
         <el-card>
           <div class="w-[100%] max-h-[60vh] py-[.5rem]">

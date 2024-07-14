@@ -21,6 +21,7 @@
           </el-menu-item>
         </div>
       </el-menu>
+      <el-switch></el-switch>
       <el-avatar>M</el-avatar>
     </div>
   </div>
@@ -30,6 +31,7 @@
 import { defineAsyncComponent } from 'vue'
 import MaterialSymbolsFace2 from '~icons/material-symbols/face-2';
 import { useRouter } from 'vue-router'
+import userStore from '../../../store/user';
 const router = useRouter();
 type MenuList = {
   title: string,
@@ -40,7 +42,7 @@ type MenuList = {
 const menuList: MenuList[] = [
   {
     title: "搜索",
-    icon: defineAsyncComponent(() => import("~icons/material-symbols-light/search")),
+    icon: defineAsyncComponent(() => import("~icons/fluent/search-48-regular")),
     path: "/",
     children: []
   },
@@ -81,6 +83,7 @@ const menuList: MenuList[] = [
     ]
   },
 ]
+
 const handleSelect = (path: string) => {
   console.log(path)
   if(!path) return;

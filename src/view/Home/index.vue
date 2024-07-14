@@ -1,6 +1,6 @@
 <template>
   <el-row :gutter="20">
-    <el-col :span="18">
+    <el-col :sm="18" :xs="24">
       <el-card v-for="article in articleList" :key="article.id" shadow="always" class="mb-[1.2rem]">
         <div class="article-item w-[100%] md:h-[18rem] 24rem flex md:flex-row flex-col overflow-hidden">
           <div class="article-cover md:w-[45%] md:h-[100%] w-[100%] h-[50%] overflow-hidden">
@@ -49,7 +49,7 @@
           layout="prev, pager, next" :total="staticArticleList.length" @change="getArticleList" />
       </div>
     </el-col>
-    <el-col :span="6">
+    <el-col :sm="6" :xs="24">
       <el-card class="mb-[1.2rme]">
         <div class="banner w-[100%] h-[8rem]">
           <el-image class="w-[100%] h-[100%]" fix="cover" :src="banner" />
