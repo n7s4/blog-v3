@@ -2,8 +2,8 @@
   <el-row :gutter="20">
     <el-col :sm="18" :xs="24">
       <el-card>
-        <MdPreview :editorId="id" :modelValue="text" />
-        <div class="copyright-info p-[20px] border  border-slate-300">
+        <MdPreview :theme="getIsDark ? 'dark' : 'light'" :editorId="id" :modelValue="text" />
+        <div class="copyright-info p-[20px] border-t  border-slate-100">
           <div class="w-[100%] p-[10px]">
             <div class="item flex items-center w-[100%]">
               <div class="label">文章作者</div>
@@ -30,7 +30,7 @@
               </div>
             </div>
           </div>
-          </div>
+        </div>
       </el-card>
     </el-col>
     <el-col :sm="6" :xs="0">
@@ -39,7 +39,7 @@
           <div class="w-[100%] max-h-[60vh] py-[.5rem]">
             <MdCatalog :scroll-element-offset-top="80" :offsetTop="80" :editorId="id" :scrollElement="scrollElement" />
           </div>
-      </el-card>
+        </el-card>
       </el-affix>
     </el-col>
   </el-row>
@@ -50,9 +50,11 @@ import { onMounted, ref } from "vue";
 import useArticle from "../../store/article"
 import banner from '@/assets/images/banner.png';
 import { MdPreview, MdCatalog } from 'md-editor-v3';
+import userStore from '../../store/user'
 // preview.css相比style.css少了编辑器那部分样式
 import 'md-editor-v3/lib/preview.css';
-
+import { storeToRefs } from "pinia";
+const { getIsDark } = storeToRefs(userStore())
 const id = 'preview-only';
 const text = ref('# Hello Editor');
 const scrollElement = document.documentElement;
@@ -82,6 +84,7 @@ onMounted(() => {
   position: relative;
   margin-right: 0.5rem;
 }
+
 .label::before {
   content: ':';
   position: absolute;
