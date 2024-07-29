@@ -4,8 +4,8 @@
       <el-card v-for="article in articleList" :key="article.id" shadow="always" class="mb-[1.2rem]">
         <div class="article-item w-[100%] md:h-[18rem] 24rem flex md:flex-row flex-col overflow-hidden">
           <div class="article-cover md:w-[45%] md:h-[100%] w-[100%] h-[50%] overflow-hidden">
-            <el-image @click="gotoArticle(article.id)" :src="article.cover" class="hover:scale-125 duration-300 h-[100%] w-[100%]"
-              fix="cover"></el-image>
+            <el-image @click="gotoArticle(article.id)" :src="article.cover"
+              class="hover:scale-125 duration-300 h-[100%] w-[100%]" fix="cover"></el-image>
           </div>
           <div class="article-content md:w-[55%] md:h-[100%] w-[100%] h-[50%] p-[1.2rem] flex flex-col justify-center">
             <div @click="gotoArticle(article.id)" class="title text-3xl mb-5">{{ article.title }}</div>
@@ -95,47 +95,54 @@
       </el-card>
       <el-affix :offset="60" style="width: inherit">
         <el-card class="mt-[1rem]">
-        <template #header>
-          <div class="flex items-center">
-            <IconParkTag class="w-[2rem] h-[2rem] mr-[0.5rem]" />
-            <div class="text-xl font-bold">
-              标签
+          <template #header>
+            <div class="flex items-center">
+              <IconParkTag class="w-[2rem] h-[2rem] mr-[0.5rem]" />
+              <div class="text-xl font-bold">
+                标签
+              </div>
+            </div>
+          </template>
+          <div class="flex flex-wrap items-center p-[1rem]">
+            <div class=" bg-neutral-300 px-[0.3rem] py-[0.1rem] mr-[0.3rem] mb-[0.3rem] rounded-md"
+              v-for="tag in tagList" :key="tag">
+              {{ tag }}
             </div>
           </div>
-        </template>
-        <div class="flex flex-wrap items-center p-[1rem]">
-          <div class=" bg-neutral-300 px-[0.3rem] py-[0.1rem] mr-[0.3rem] mb-[0.3rem] rounded-md" v-for="tag in tagList" :key="tag">
-            {{ tag }}
-          </div>
-        </div>
-      </el-card>
-      <el-card class="mt-[1rem]">
-        <template #header>
-          <div class="flex items-center">
-            <Fa6RegularChartBar class="w-[2rem] h-[2rem] mr-[0.5rem]" />
-            <div class="text-xl font-bold">
-              网站咨询
+        </el-card>
+        <el-card class="mt-[1rem]">
+          <template #header>
+            <div class="flex items-center">
+              <Fa6RegularChartBar class="w-[2rem] h-[2rem] mr-[0.5rem]" />
+              <div class="text-xl font-bold">
+                网站咨询
+              </div>
+            </div>
+          </template>
+          <div class="p-[1rem] flex flex-col justify-center items-center">
+            <div class="item flex justify-between  items-center w-[100%]">
+              <div class="title text-md">文章数目</div>
+              <div class="title text-md">20</div>
+            </div>
+            <div class="item flex justify-between  items-center w-[100%]">
+              <div class="title text-md">运行时间</div>
+              <div class="title text-md">20</div>
+            </div>
+            <div class="item flex justify-between  items-center w-[100%]">
+              <div class="title text-md">博客访问次数</div>
+              <div class="title text-md">20</div>
             </div>
           </div>
-        </template>
-        <div class="p-[1rem] flex flex-col justify-center items-center">
-          <div class="item flex justify-between  items-center w-[100%]">
-            <div class="title text-md">文章数目</div>
-            <div class="title text-md">20</div>
-          </div>
-          <div class="item flex justify-between  items-center w-[100%]">
-            <div class="title text-md">运行时间</div>
-            <div class="title text-md">20</div>
-          </div>
-          <div class="item flex justify-between  items-center w-[100%]">
-            <div class="title text-md">博客访问次数</div>
-            <div class="title text-md">20</div>
-          </div>
-        </div>
-      </el-card>
+        </el-card>
+        <MageMessageDotsRoundFill />
       </el-affix>
+
     </el-col>
   </el-row>
+  <div>
+
+  </div>
+
 </template>
 
 <script setup lang="ts">
@@ -249,8 +256,8 @@ const getArticleList = () => {
   articleList.value = staticArticleList.slice(current, current + params.pageSize);
 }
 const gotoArticle = (id: number) => {
-  if(!id) return
-  router.push({ path: '/article', query: {id}});
+  if (!id) return
+  router.push({ path: '/article', query: { id } });
 }
 onMounted(() => {
   getArticleList();

@@ -8,12 +8,15 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     BlogImage: typeof import('./src/components/blog-image/index.vue')['default']
+    ChatRoom: typeof import('./src/components/chat-room/index.vue')['default']
     ElAddix: typeof import('element-plus/es')['ElAddix']
     ElAffix: typeof import('element-plus/es')['ElAffix']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
+    ElButton: typeof import('element-plus/es')['ElButton']
     ElCard: typeof import('element-plus/es')['ElCard']
     ElCol: typeof import('element-plus/es')['ElCol']
     ElImage: typeof import('element-plus/es')['ElImage']
+    ElInput: typeof import('element-plus/es')['ElInput']
     ElMenu: typeof import('element-plus/es')['ElMenu']
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
     ElPagination: typeof import('element-plus/es')['ElPagination']

@@ -9,8 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@duskmoon/vue3-typed-js": "^0.0.4",
     "@vueuse/core": "^10.11.0",
     "axios": "^1.7.2",
+    "core-js": "^3.37.1",
     "element-plus": "^2.7.6",
     "lodash": "^4.17.21",
     "md-editor-v3": "^4.17.3",
@@ -21,6 +23,8 @@
   },
   "devDependencies": {
     "@iconify-json/akar-icons": "^1.1.24",
+    "@iconify-json/bi": "^1.1.23",
+    "@iconify-json/carbon": "^1.1.36",
     "@iconify-json/cib": "^1.1.8",
     "@iconify-json/eos-icons": "^1.1.10",
     "@iconify-json/fa-regular": "^1.1.8",
@@ -28,6 +32,7 @@
     "@iconify-json/fluent": "^1.1.58",
     "@iconify-json/ic": "^1.1.17",
     "@iconify-json/icon-park": "^1.1.13",
+    "@iconify-json/icon-park-outline": "^1.1.15",
     "@iconify-json/mage": "^1.1.0",
     "@iconify-json/material-symbols": "^1.1.82",
     "@iconify-json/material-symbols-light": "^1.1.22",

@@ -2,19 +2,26 @@ import { useRoute } from 'vue-router';
 <template>
   <div class="page-header">
     <div id="home" class="home" v-if="route.path === '/home'">
-      <el-image :src="banner" class="banner" fix="cover" />
-      <div class="content">
-        <div class="title">
-          Blog
-        </div>
-        <div class="saying">
+      <div class="h-[85vh]" style="border-bottom: none;">
+        <el-image :src="mainHome" class="banner" fix="cover" />
+        <div class="content">
+          <div class="title">
+            Like's blog
+          </div>
+          <!-- <div class="saying">
           一点浩然气，千里快哉风
+        </div> -->
+          <Typed :options="options" class="typedClass">
+            <div class="typing"></div>
+          </Typed>
+        </div>
+        <div class="mask"></div>
+        <div v-if="showScrollBottom" @click="scrollToBottom" class="scroll-bottom">
+          <MingcuteDownFill class="scroll-icon w-[2rem] h-[2rem]" />
         </div>
       </div>
-      <div class="mask"></div>
-      <div v-if="showScrollBottom" @click="scrollToBottom" class="scroll-bottom">
-        <MingcuteDownFill class="scroll-icon w-[2rem] h-[2rem]" />
-      </div>
+
+      <HelloWorld />
     </div>
     <div class="article" v-else-if="route.path === '/article'">
       <el-image :src="banner" class="banner" fix="cover" />
@@ -70,6 +77,10 @@ import { useRoute } from 'vue-router';
 </template>
 
 <script setup lang="ts">
+// import Typewriter from "typewriter-vue";
+import HelloWorld from "../HelloWorld.vue";
+import { Typed } from "@duskmoon/vue3-typed-js";
+import type { TypedOptions } from "@duskmoon/vue3-typed-js";
 import FaRegularListAlt from "~icons/fa-regular/list-alt";
 import FaRegularBookmark from "~icons/fa-regular/bookmark";
 import Fa6RegularThumbsUp from "~icons/fa6-regular/thumbs-up";
@@ -78,6 +89,7 @@ import Fa6RegularCalendarDays from "~icons/fa6-regular/calendar-days";
 import Fa6RegularClock from "~icons/fa6-regular/clock";
 import { useRoute } from 'vue-router';
 import banner from '@/assets/images/banner.png';
+import mainHome from '@/assets/images/main_home.webp'
 import MingcuteDownFill from '~icons/mingcute/down-fill';
 import useArticleStore from '../../store/article'
 import { onMounted, ref } from 'vue';
@@ -88,7 +100,15 @@ const showScrollBottom = ref(true);
 
 const articleStore = useArticleStore();
 const { getArticle, } = storeToRefs(articleStore);
-
+const options: TypedOptions = {
+  strings: ['一点浩然气，千里快哉风'],
+  // 是否循环
+  loop: true,
+  // 打字速度
+  typeSpeed: 200,
+  // 回退速度
+  backSpeed: 20,
+};
 const scrollToBottom = () => {
   const homeElement = document.querySelector("#home");
   if (homeElement) {
@@ -117,6 +137,8 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .page-header {
+
+  font-family: 'mama', sans-serif;
   width: 100%;
 
   .home {
@@ -165,7 +187,7 @@ onMounted(() => {
     .title {
       font-size: 2rem;
       font-weight: bold;
-      color: #fff;
+      color: #000;
       text-align: center;
     }
 
@@ -173,6 +195,35 @@ onMounted(() => {
       font-size: 1.4rem;
       color: #fff;
       text-align: center;
+      position: relative;
+    }
+
+    .saying::after {
+      content: '|';
+      /* 显示竖线 */
+      position: absolute;
+      right: -10px;
+      /* 调整竖线的位置 */
+      top: 50%;
+      /* 垂直居中 */
+      transform: translateY(-50%);
+      animation: blink 1s step-end infinite;
+      /* 应用动画 */
+      opacity: 1;
+    }
+
+    @keyframes blink {
+      0% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
     }
   }
 }

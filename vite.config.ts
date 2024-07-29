@@ -51,6 +51,7 @@ export default defineConfig({
     }),
     // unplugin icon
     Icons({
+      // 实验性功能 当您导入图标时，它会自动检测合适的包管理器（npm、yarn 或 pnpm）来安装图标集。
       autoInstall: true,
     }),
   ],

@@ -5,6 +5,9 @@
     </div>
     <div class="right">
       <el-menu :ellipsis="false" mode="horizontal" @select="handleSelect">
+        <el-menu-item>
+          <component class="search" style="color: #fff;" :is="BiSearch"></component>
+        </el-menu-item>
         <div v-for="menu in menuList" :key="menu.path">
           <el-sub-menu v-if="menu.children.length" :index="menu.path">
             <template #title>
@@ -35,6 +38,7 @@ import MaterialSymbolsFace2 from '~icons/material-symbols/face-2';
 import { useRouter } from 'vue-router'
 import userStore from '../../../store/user';
 import { storeToRefs } from 'pinia';
+import BiSearch from '~icons/bi/search?width=2em&height=2em';
 const router = useRouter();
 type MenuList = {
   title: string,
@@ -45,12 +49,12 @@ type MenuList = {
 const { getIsDark } = storeToRefs(userStore())
 const isDark = ref(getIsDark.value)
 const menuList: MenuList[] = [
-  {
-    title: "搜索",
-    icon: defineAsyncComponent(() => import("~icons/fluent/search-48-regular")),
-    path: "/",
-    children: []
-  },
+  // {
+  //   title: "搜索",
+  //   icon: defineAsyncComponent(() => import("~icons/bi/search")),
+  //   path: "/",
+  //   children: []
+  // },
   {
     title: "首页",
     icon: defineAsyncComponent(() => import("~icons/akar-icons/home")),
@@ -97,6 +101,14 @@ const handleSelect = (path: string) => {
 </script>
 
 <style lang="scss" scoped>
+.search:hover {
+  // 放大1.2倍
+  transform: scale(1.2);
+  // 平滑的动画
+  transition: all .3s;
+
+}
+
 .header-container {
   display: flex;
   // justify-content: space-between;
