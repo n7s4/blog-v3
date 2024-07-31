@@ -1,54 +1,58 @@
 <template>
-  <el-card style="min-width: 480px">
-    <template #header>
-      <div class="card-header">
-        <div class="header-left flex">
-          <div class="title mr-[10px]">{{ title }}</div>
-          <span class="online">在线人数1</span>
-        </div>
-        <div class="header-right flex">
-          <CarbonUserAvatarFilledAlt class="mr-[5px]" />
-          <IconParkOutlineCloseOne
-            @click="props.hanldeClickMessage"
-            class="close"
-          />
-        </div>
-      </div>
-    </template>
-    <div class="content">
-      <div
-        class="content-item"
-        v-for="(item, index) in messageList"
-        :key="index"
-      >
-        <div class="item-left" v-if="item.userId !== userInfo.userId">
-          <el-avatar :src="item.userId" />
-          <div class="ml-[11px]">
-            {{ item.content }}
-          </div>
-        </div>
-        <div class="item-right" v-else>
-          <div class="mr-[10px]">
-            {{ item.content }}
-          </div>
-          <el-avatar :src="item.userId" />
-        </div>
-      </div>
+  <div class="chat-room">
+    <div class="emoji">
+      <EmojiPicker @select="onSelectEmoji" :native="true" v-if="visibleEmoji" />
     </div>
-    <template #footer>
-      <div class="footer">
-        <div class="footer-left">
-          <FluentEmojiMultiple24Filled />
+
+    <el-card style="min-width: 480px">
+      <template #header>
+        <div class="card-header">
+          <div class="header-left flex">
+            <div class="title mr-[10px]">{{ title }}</div>
+            <span class="online">在线人数{{ onlineList.length }}</span>
+          </div>
+          <div class="header-right flex">
+            <CarbonUserAvatarFilledAlt class="mr-[5px]" @click="showLines = !showLines" />
+            <IconParkOutlineCloseOne @click="props.hanldeClickMessage" class="close" />
+          </div>
         </div>
-        <div class="footer-center">
-          <el-input v-model="yourMessage" @keyup="sendMessage" />
-        </div>
-        <div class="footer-right">
-          <el-button @click="sendMessage">发送</el-button>
+      </template>
+      <div class="content">
+        <div class="content-item" v-for="(item, index) in messageList" :key="index">
+          <div class="item-left" v-if="item.userId !== userInfo.userId">
+            <el-avatar :src="item.userId" />
+            <div class="ml-[11px]">
+              {{ item.content }}
+            </div>
+          </div>
+          <div class="item-right" v-else>
+            <div class="mr-[10px]">
+              {{ item.content }}
+            </div>
+            <el-avatar :src="item.userId" />
+          </div>
         </div>
       </div>
-    </template>
-  </el-card>
+      <template #footer>
+        <div class="footer">
+          <div class="footer-left">
+            <FluentEmojiMultiple24Filled @click="visibleEmoji = !visibleEmoji" />
+
+          </div>
+          <div class="footer-center">
+            <el-input v-model="yourMessage" @keyup.enter="sendMessage" />
+          </div>
+          <div class="footer-right">
+            <el-button @click="sendMessage">发送</el-button>
+          </div>
+        </div>
+
+      </template>
+
+    </el-card>
+
+  </div>
+
 </template>
 
 <script setup lang="ts">
@@ -58,6 +62,8 @@ import IconParkOutlineCloseOne from "~icons/icon-park-outline/close-one?width=32
 import CarbonUserAvatarFilledAlt from "~icons/carbon/user-avatar-filled-alt?width=32px&height=32px";
 // @ts-ignore
 import FluentEmojiMultiple24Filled from "~icons/fluent/emoji-multiple-24-filled?width=1.2em&height=1.2em";
+import EmojiPicker from 'vue3-emoji-picker'
+import 'vue3-emoji-picker/css'
 import { onMounted, ref } from "vue";
 const props = defineProps({
   hanldeClickMessage: {
@@ -73,6 +79,8 @@ const userInfo = ref({
 });
 const messageList = ref<any>([]);
 const onlineList = ref([]);
+const visibleEmoji = ref(false);
+const showLines = ref(false);
 const sendMessage = () => {
   if (yourMessage.value) {
     ws.send(
@@ -127,60 +135,75 @@ const initWebsocket = () => {
     console.log("websocket连接关闭");
   };
 };
+const onSelectEmoji = (emoji: any) => {
+  console.log(emoji);
+
+  yourMessage.value += emoji.i;
+}
 </script>
 
 <style scoped>
-.card-header {
-  height: 1.2rem;
+.chat-room {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
 
-  .header-left {
+  .emoji {
+    margin: 1.5rem;
+  }
+
+  .card-header {
+    height: 1.2rem;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
 
-    .online {
-      font-size: 0.7rem;
-      color: #999;
+    .header-left {
+      align-items: center;
+
+      .online {
+        font-size: 0.7rem;
+        color: #999;
+      }
+    }
+
+    .header-right {
+      .close:hover {
+        color: aquamarine;
+      }
     }
   }
 
-  .header-right {
-    .close:hover {
-      color: aquamarine;
+  .content {
+    height: 300px;
+    overflow-y: scroll;
+
+    .content-item {
+      margin: 20px 10px;
     }
   }
-}
 
-.content {
-  height: 300px;
-  overflow-y: scroll;
-  .content-item {
-    margin: 20px 10px;
+  .item-left {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
   }
-}
-.item-left {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-}
 
-.item-right {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
+  .item-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
 
-.footer {
-  height: 0.8rem;
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
+  .footer {
+    height: 0.8rem;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
 
-  .footer-center {
-    flex: 1;
-    margin-left: 10px;
-    margin-right: 10px;
+    .footer-center {
+      flex: 1;
+      margin-left: 10px;
+      margin-right: 10px;
+    }
   }
 }
 </style>
