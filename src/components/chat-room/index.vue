@@ -1,9 +1,9 @@
 <template>
   <div class="chat-room">
-    <div class="emoji">
+    <div class="emoji" ref="emoji">
       <EmojiPicker @select="onSelectEmoji" :native="true" v-if="visibleEmoji" />
     </div>
-
+    <div class="user-onlines" v-if="showLines"></div>
     <el-card style="min-width: 480px">
       <template #header>
         <div class="card-header">
@@ -12,13 +12,23 @@
             <span class="online">在线人数{{ onlineList.length }}</span>
           </div>
           <div class="header-right flex">
-            <CarbonUserAvatarFilledAlt class="mr-[5px]" @click="showLines = !showLines" />
-            <IconParkOutlineCloseOne @click="props.hanldeClickMessage" class="close" />
+            <CarbonUserAvatarFilledAlt
+              class="mr-[5px]"
+              @click="showLines = !showLines"
+            />
+            <IconParkOutlineCloseOne
+              @click="props.hanldeClickMessage"
+              class="close"
+            />
           </div>
         </div>
       </template>
       <div class="content">
-        <div class="content-item" v-for="(item, index) in messageList" :key="index">
+        <div
+          class="content-item"
+          v-for="item in messageList"
+          :key="item.userId"
+        >
           <div class="item-left" v-if="item.userId !== userInfo.userId">
             <el-avatar :src="item.userId" />
             <div class="ml-[11px]">
@@ -36,8 +46,9 @@
       <template #footer>
         <div class="footer">
           <div class="footer-left">
-            <FluentEmojiMultiple24Filled @click="visibleEmoji = !visibleEmoji" />
-
+            <div ref="emojiRef">
+              <FluentEmojiMultiple24Filled />
+            </div>
           </div>
           <div class="footer-center">
             <el-input v-model="yourMessage" @keyup.enter="sendMessage" />
@@ -46,13 +57,9 @@
             <el-button @click="sendMessage">发送</el-button>
           </div>
         </div>
-
       </template>
-
     </el-card>
-
   </div>
-
 </template>
 
 <script setup lang="ts">
@@ -62,9 +69,9 @@ import IconParkOutlineCloseOne from "~icons/icon-park-outline/close-one?width=32
 import CarbonUserAvatarFilledAlt from "~icons/carbon/user-avatar-filled-alt?width=32px&height=32px";
 // @ts-ignore
 import FluentEmojiMultiple24Filled from "~icons/fluent/emoji-multiple-24-filled?width=1.2em&height=1.2em";
-import EmojiPicker from 'vue3-emoji-picker'
-import 'vue3-emoji-picker/css'
-import { onMounted, ref } from "vue";
+import EmojiPicker from "vue3-emoji-picker";
+import "vue3-emoji-picker/css";
+import { onMounted, ref, onBeforeUnmount } from "vue";
 const props = defineProps({
   hanldeClickMessage: {
     type: Function,
@@ -81,6 +88,8 @@ const messageList = ref<any>([]);
 const onlineList = ref([]);
 const visibleEmoji = ref(false);
 const showLines = ref(false);
+const emoji = ref<HTMLElement | null>(null);
+const emojiRef = ref<HTMLElement | null>(null);
 const sendMessage = () => {
   if (yourMessage.value) {
     ws.send(
@@ -96,6 +105,11 @@ const sendMessage = () => {
 onMounted(() => {
   userInfo.value.userId = new Date().getTime().toString().slice(8);
   initWebsocket();
+  document.addEventListener("click", handleClickOutsideforEmoji);
+});
+
+onBeforeUnmount(() => {
+  document.removeEventListener("click", handleClickOutsideforEmoji);
 });
 const initWebsocket = () => {
   ws = new WebSocket("ws:127.0.0.1:8888");
@@ -135,21 +149,42 @@ const initWebsocket = () => {
     console.log("websocket连接关闭");
   };
 };
+// 监听点击事件 点击FluentEmojiMultiple24Filled时，切换状态，点击EmojiPicker外部时隐藏
+const handleClickOutsideforEmoji = (event: Event) => {
+  if (
+    emoji &&
+    !emoji.value?.contains(event.target as Node) &&
+    !emojiRef.value?.contains(event.target as Node)
+  ) {
+    visibleEmoji.value = false;
+    console.log(1);
+  } else if (emojiRef && emojiRef.value?.contains(event.target as Node)) {
+    visibleEmoji.value = !visibleEmoji.value;
+  }
+};
 const onSelectEmoji = (emoji: any) => {
-  console.log(emoji);
-
   yourMessage.value += emoji.i;
-}
+};
 </script>
 
 <style scoped>
 .chat-room {
-  display: flex;
-
+  /* display: flex; */
+  position: relative;
   .emoji {
-    margin: 1.5rem;
+    /* margin: 1.5rem; */
+    position: absolute;
+    top: 10%;
+    left: 10%;
   }
-
+  .user-onlines {
+    position: absolute;
+    top: -50%;
+    right: 0%;
+    width: 100px;
+    height: 200px;
+    background-color: #fff;
+  }
   .card-header {
     height: 1.2rem;
     display: flex;
