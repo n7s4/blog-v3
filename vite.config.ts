@@ -32,7 +32,7 @@ export default defineConfig({
   // 配置别名
   resolve: {
     alias: {
-      "@": resolve(__dirname, "/src"),
+      "@": resolve(__dirname, "./src"),
     },
   },
   plugins: [
