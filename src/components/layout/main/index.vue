@@ -27,6 +27,7 @@
 import { useRoute } from "vue-router";
 import PageHeader from "../../page-header/index.vue";
 import ChatRoom from "../../chat-room/index.vue";
+// @ts-ignore
 import MageMessageDotsRoundFill from "~icons/mage/message-dots-round-fill?width=48px&height=48px";
 import { onMounted, ref } from "vue";
 import * as _ from "lodash";

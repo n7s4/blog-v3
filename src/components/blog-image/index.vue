@@ -1,6 +1,15 @@
 <template>
-  <el-image :class="['w-[100%]', 'h-[100%]', animate ? 'duration-300 hover:scale-110' : '']" :src="src" lazy :fit="fit"
-    v-bind="$attrs">
+  <el-image
+    :class="[
+      'w-[100%]',
+      'h-[100%]',
+      animate ? 'duration-300 hover:scale-110' : '',
+    ]"
+    :src="src"
+    lazy
+    :fit="fit"
+    v-bind="$attrs"
+  >
     <template #placeholder>
       <div class="w-[100%] h-[100%] grid place-items-center">
         <EosIconsBubbleLoading size="60" class="w-[2rem] h-[2rem]" />
@@ -15,13 +24,15 @@
 </template>
 
 <script setup lang="ts">
-import IcRoundErrorOutline from '~icons/ic/round-error-outline';
-import EosIconsBubbleLoading from '~icons/eos-icons/bubble-loading';
+// @ts-ignore
+import IcRoundErrorOutline from "~icons/ic/round-error-outline";
+// @ts-ignore
+import EosIconsBubbleLoading from "~icons/eos-icons/bubble-loading";
 
 defineProps({
   src: {
     type: String,
-    default: '',
+    default: "",
   },
   lazy: {
     type: Boolean,
@@ -29,12 +40,12 @@ defineProps({
   },
   fit: {
     type: String,
-    default: 'cover',
+    default: "cover",
   },
   animate: {
     type: Boolean,
     default: true,
-  }
-})
+  },
+});
 </script>
 <style lang="scss" scoped></style>
