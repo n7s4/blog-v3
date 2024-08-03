@@ -3,7 +3,13 @@
     <div class="emoji" ref="emoji">
       <EmojiPicker @select="onSelectEmoji" :native="true" v-if="visibleEmoji" />
     </div>
-    <div class="user-onlines" v-if="showLines"></div>
+    <el-card class="user-onlines" v-if="showLines">
+      <ul>
+        <li v-for="item in onlineList" :key="item.userId">
+          {{ item.userId }}
+        </li>
+      </ul>
+    </el-card>
     <el-card style="min-width: 480px">
       <template #header>
         <div class="card-header">
@@ -69,7 +75,7 @@ import IconParkOutlineCloseOne from "~icons/icon-park-outline/close-one?width=32
 import CarbonUserAvatarFilledAlt from "~icons/carbon/user-avatar-filled-alt?width=32px&height=32px";
 // @ts-ignore
 import FluentEmojiMultiple24Filled from "~icons/fluent/emoji-multiple-24-filled?width=1.2em&height=1.2em";
-import EmojiPicker from "vue3-emoji-picker";
+import EmojiPicker, { EmojiExt } from "vue3-emoji-picker";
 import "vue3-emoji-picker/css";
 import { onMounted, ref, onBeforeUnmount } from "vue";
 const props = defineProps({
@@ -78,21 +84,21 @@ const props = defineProps({
     required: true,
   },
 });
-let ws: any = null;
+let ws: WebSocket | null = null;
 const title = "Like的聊天室";
 const yourMessage = ref("");
 const userInfo = ref({
   userId: "",
 });
 const messageList = ref<any>([]);
-const onlineList = ref([]);
+const onlineList = ref<{ userId: string }[]>([]);
 const visibleEmoji = ref(false);
 const showLines = ref(false);
 const emoji = ref<HTMLElement | null>(null);
 const emojiRef = ref<HTMLElement | null>(null);
 const sendMessage = () => {
   if (yourMessage.value) {
-    ws.send(
+    ws?.send(
       JSON.stringify({
         type: "message",
         userId: userInfo.value.userId,
@@ -115,7 +121,7 @@ const initWebsocket = () => {
   ws = new WebSocket("ws:127.0.0.1:8888");
   ws.onopen = () => {
     console.log("websocket连接成功");
-    ws.send(
+    ws?.send(
       JSON.stringify({
         type: "init",
         userId: userInfo.value.userId,
@@ -162,7 +168,7 @@ const handleClickOutsideforEmoji = (event: Event) => {
     visibleEmoji.value = !visibleEmoji.value;
   }
 };
-const onSelectEmoji = (emoji: any) => {
+const onSelectEmoji = (emoji: EmojiExt) => {
   yourMessage.value += emoji.i;
 };
 </script>
@@ -183,7 +189,7 @@ const onSelectEmoji = (emoji: any) => {
     right: 0%;
     width: 100px;
     height: 200px;
-    background-color: #fff;
+    /* background-color: #fff; */
   }
   .card-header {
     height: 1.2rem;
